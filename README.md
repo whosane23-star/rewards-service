@@ -1,14 +1,103 @@
-#The rest API to get customer rewards based on the customer Id
-#Problem
-#A retailer offers a rewards program to its customers, awarding points based on each recorded purchase. A customer receives 2 points for every dollar spent over $100 in each transaction, plus 1 point for every dollar spent over $50 in each transaction (e.g. a $120 purchase = 2x$20 + 1x$50 = 90 points). Given a record of every transaction during a three month period, calculate the reward points earned for each customer per month and total.
+# Rewards Service API
 
-The package name is structured as com.rewardsservice
-Exception is thrown if customer does not exists or any kind of exception.
-Added Swagger for API documentation.
+A Spring Boot REST API to calculate customer reward points based on purchase transactions.
+
+---
+
+## Problem Statement
+
+A retailer offers a rewards program to its customers, awarding points based on each recorded purchase.
+
+### Rewards Calculation Rules
+
+- 2 points for every dollar spent over `$100`
+- 1 point for every dollar spent between `$50` and `$100`
+
+### Example
+
+For a purchase of `$120`:
+
+- 2 × 20 = 40 points
+- 1 × 50 = 50 points
+
+Total Reward Points = **90**
+
+The application calculates:
+
+- Monthly reward points
+- Total reward points
+- Rewards for each customer during a three-month period
+
+---
+
+## Tech Stack
+
+- Java 17
+- Spring Boot
+- Gradle
+- REST API
+- Swagger / OpenAPI
+
+---
+
+## Package Structure
+
+```text
+com.rewardsservice
+```
+
+---
+
+## Features
+
+- Calculate reward points based on transactions
+- Monthly rewards summary
+- Total rewards summary
+- Exception handling
+- Swagger API documentation
+- RESTful API implementation
+
+---
+
+## Exception Handling
+
+The application throws exceptions when:
+
+- Customer does not exist
+- Invalid request is provided
+- Any unexpected server error occurs
+
+---
+
+## Swagger API Documentation
+
+Swagger UI is available at:
+
+```text
 http://localhost:8080/swagger-ui/index.html
-#Request end point and response
+```
 
-http://localhost:8080/api/rewards/2
+---
+
+## API Endpoint
+
+### Get Rewards By Customer ID
+
+```http
+GET /api/rewards/{customerId}
+```
+
+### Example Request
+
+```http
+GET http://localhost:8080/api/rewards/2
+```
+
+---
+
+## Sample Response
+
+```json
 {
   "customerId": 2,
   "customerName": "John",
@@ -20,3 +109,38 @@ http://localhost:8080/api/rewards/2
   "message": "Transaction record found",
   "status": "Success"
 }
+```
+
+---
+
+## Running the Application
+
+### Clone Repository
+
+```bash
+git clone <repository-url>
+```
+
+### Navigate to Project
+
+```bash
+cd rewards-service
+```
+
+### Run the Application
+
+```bash
+./gradlew bootRun
+```
+
+Application will start at:
+
+```text
+http://localhost:8080
+```
+
+---
+
+## Author
+
+Developed using Spring Boot REST API best practices.
