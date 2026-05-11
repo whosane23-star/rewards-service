@@ -7,7 +7,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,32 +22,31 @@ public class RewardService {
         transactions.stream()
             .filter(f -> f.getCustomerId().equals(customerId))
             .collect(Collectors.groupingBy(Transaction::getCustomerId));
-    if(!customerMap.isEmpty()) {
-    	
+    if (!customerMap.isEmpty()) {
 
-    for (Map.Entry<Long, List<Transaction>> entry : customerMap.entrySet()) {
-      Long custId = entry.getKey();
-      List<Transaction> customerTransactions = entry.getValue();
-      String customerName = customerTransactions.get(0).getCustomerName();
-      Map<String, Integer> monthlyRewards = new HashMap<>();
-      int totalRewards = 0;
+      for (Map.Entry<Long, List<Transaction>> entry : customerMap.entrySet()) {
+        Long custId = entry.getKey();
+        List<Transaction> customerTransactions = entry.getValue();
+        String customerName = customerTransactions.get(0).getCustomerName();
+        Map<String, Integer> monthlyRewards = new HashMap<>();
+        int totalRewards = 0;
 
-      for (Transaction transaction : customerTransactions) {
-        int points = calculatePoints(transaction.getAmount());
-        String month = transaction.getTransactionDate().getMonth().toString();
-        monthlyRewards.put(month, monthlyRewards.getOrDefault(month, 0) + points);
-        totalRewards += points;
+        for (Transaction transaction : customerTransactions) {
+          int points = calculatePoints(transaction.getAmount());
+          String month = transaction.getTransactionDate().getMonth().toString();
+          monthlyRewards.put(month, monthlyRewards.getOrDefault(month, 0) + points);
+          totalRewards += points;
+        }
+        responses.setCustomerId(custId);
+        responses.setCustomerName(customerName);
+        responses.setMonthlyRewards(monthlyRewards);
+        responses.setTotalRewards(totalRewards);
+        responses.setMessage("Transaction record found");
+        responses.setStatus("Success");
       }
-      responses.setCustomerId(custId);
-      responses.setCustomerName(customerName);
-      responses.setMonthlyRewards(monthlyRewards);
-      responses.setTotalRewards(totalRewards);
-      responses.setMessage("Transaction record found");
-      responses.setStatus("Success");
-    }
-    }else {
-    	responses.setMessage("No transaction record found");
-    	responses.setStatus("Failure");
+    } else {
+      responses.setMessage("No transaction record found");
+      responses.setStatus("Failure");
     }
     log.debug("Reward found: {}", responses);
     return responses;
