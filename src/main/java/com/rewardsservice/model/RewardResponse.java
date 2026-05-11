@@ -17,4 +17,8 @@ public class RewardResponse {
   private Map<String, Integer> monthlyRewards;
 
   private Integer totalRewards;
+  
+  private String message;
+  
+  private String status;
 }

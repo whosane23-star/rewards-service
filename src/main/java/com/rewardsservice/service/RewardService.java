@@ -7,6 +7,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,14 +17,14 @@ public class RewardService {
 
   public RewardResponse calculateRewards(Long customerId) {
     log.info("Entering in method calculateRewards for customerId: {}", customerId);
-    List<Transaction> transactions = getTransactions();
-
+    List<Transaction> transactions = getTransactionRecords();
+    RewardResponse responses = new RewardResponse();
     Map<Long, List<Transaction>> customerMap =
         transactions.stream()
             .filter(f -> f.getCustomerId().equals(customerId))
             .collect(Collectors.groupingBy(Transaction::getCustomerId));
-
-    RewardResponse responses = new RewardResponse();
+    if(!customerMap.isEmpty()) {
+    	
 
     for (Map.Entry<Long, List<Transaction>> entry : customerMap.entrySet()) {
       Long custId = entry.getKey();
@@ -42,6 +43,12 @@ public class RewardService {
       responses.setCustomerName(customerName);
       responses.setMonthlyRewards(monthlyRewards);
       responses.setTotalRewards(totalRewards);
+      responses.setMessage("Transaction record found");
+      responses.setStatus("Success");
+    }
+    }else {
+    	responses.setMessage("No transaction record found");
+    	responses.setStatus("Failure");
     }
     log.debug("Reward found: {}", responses);
     return responses;
@@ -58,7 +65,7 @@ public class RewardService {
     return points;
   }
 
-  private List<Transaction> getTransactions() {
+  private List<Transaction> getTransactionRecords() {
     return Arrays.asList(
         new Transaction(1L, "Rahul", 120.0, LocalDate.of(2026, 1, 15)),
         new Transaction(1L, "Rahul", 75.0, LocalDate.of(2026, 2, 10)),

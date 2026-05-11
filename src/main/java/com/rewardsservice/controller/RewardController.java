@@ -4,6 +4,8 @@ import com.rewardsservice.model.RewardResponse;
 import com.rewardsservice.service.RewardService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Min;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +28,10 @@ public class RewardController {
   @GetMapping
   @Operation(summary = "Get customer rewards based on customerId")
   public ResponseEntity<RewardResponse> getRewardsgetRewards(
-      @PathVariable("customerId") Long customerId) {
+      @PathVariable("customerId") @Min(value = 1, message = "Customer id must be greater than 0")
+      Long customerId) {
     log.info("Entering in method getRewards for customerId: {}", customerId);
     RewardResponse rewardResponse = rewardService.calculateRewards(customerId);
-    if (rewardResponse == null) {
-      return ResponseEntity.noContent().build();
-    }
     return ResponseEntity.status(HttpStatus.OK).body(rewardResponse);
   }
 }
