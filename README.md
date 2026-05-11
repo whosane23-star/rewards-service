@@ -6,7 +6,7 @@
 
 ## Tech Stack
 
-- Java 17
+- Java 8
 - Spring Boot
 - Gradle
 - REST API
