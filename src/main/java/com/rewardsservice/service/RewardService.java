@@ -52,7 +52,7 @@ public class RewardService {
               Optional.ofNullable(transaction.getTransactionDate())
                   .map(LocalDate::getMonth)
                   .map(Month::toString)
-                  .orElse("");
+                  .orElse("UNKNOWN");
           monthlyRewards.put(month, monthlyRewards.getOrDefault(month, 0) + points);
           totalRewards += points;
         }

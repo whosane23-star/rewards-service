@@ -22,7 +22,10 @@ public class TransactionProviderUtil {
         new Transaction(2L, "John", 130.0, LocalDate.of(2026, 2, 25)),
         new Transaction(3L, "Sunny", 132.9, LocalDate.of(2026, 1, 05)),
         new Transaction(3L, "Sunny", 123.0, LocalDate.of(2026, 2, 15)),
-        new Transaction(3L, "Sunny", 85.9, LocalDate.of(2026, 3, 24)));
+        new Transaction(3L, "Sunny", 85.9, LocalDate.of(2026, 3, 24)),
+        new Transaction(4L, "Aman", 40.0, LocalDate.of(2026, 2, 10)),
+        new Transaction(5L, "Rajeev", 70.0, LocalDate.of(2026, 2, 15)),
+        new Transaction(6L, "Akash", 120.0, null));
   }
 
   /**
