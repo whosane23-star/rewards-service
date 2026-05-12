@@ -49,6 +49,8 @@ src
 └── test
     └── java
         └── com.rewardsservice
+            ├── controller
+            ├── service
 ```
 
 ---
@@ -62,10 +64,6 @@ src
 - Global exception handling
 - Swagger API documentation
 - Unit testing with Mockito and JUnit
-- Clean layered architecture
-
----
-
 
 ---
 
@@ -82,7 +80,7 @@ GET /api/rewards/{customerId}
 ### Example
 
 ```text
-http://localhost:8080/api/rewards/2
+http://localhost:9090/api/rewards/2
 ```
 
 ---
@@ -111,16 +109,22 @@ The application uses `@RestControllerAdvice` for global exception handling.
 
 ## Handled Exceptions
 
-- Customer not found exception
-- Invalid request exception
-- Internal server exception
+The application handles the following exceptions:
 
-## Sample Error Response
+- Invalid request validation errors
+- Runtime exceptions
+- Internal server errors
+
+## Sample Error Response (Customer Not Found)
 
 ```json
 {
-  "message": "Customer not found",
-  "status": "FAILED"
+  "customerId": null,
+  "customerName": null,
+  "monthlyRewards": null,
+  "totalRewards": null,
+  "message": "No transaction record found",
+  "status": "Failure"
 }
 ```
 
@@ -131,7 +135,7 @@ The application uses `@RestControllerAdvice` for global exception handling.
 Swagger UI is available at:
 
 ```text
-http://localhost:8080/swagger-ui/index.html
+http://localhost:9090/swagger-ui/index.html
 ```
 
 ---
@@ -165,7 +169,7 @@ cd rewards-service
 The application will start on:
 
 ```text
-http://localhost:8080
+http://localhost:9090
 ```
 
 ---
@@ -178,15 +182,12 @@ Run unit test cases using:
 ./gradlew test
 ```
 
----
-
 # Test Coverage
 
 The project includes:
 
 - Service layer test cases
 - Controller layer test cases
-- Exception handling test cases
 - Mockito-based unit testing
 
 ---
@@ -194,4 +195,4 @@ The project includes:
 
 # Author
 
-Ashraf
+Ashraf Husain
