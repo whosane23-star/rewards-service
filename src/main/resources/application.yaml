@@ -1,3 +1,6 @@
 spring:
   application:
     name: rewards-service
+
+server:
+  port: 9090

@@ -28,4 +28,10 @@ public class RewardControllerTest {
 
     mockMvc.perform(get("/api/rewards/1")).andExpect(status().is2xxSuccessful());
   }
+
+  @Test
+  void testGetRewardsBadRequest() throws Exception {
+
+    mockMvc.perform(get("/api/rewards/0")).andExpect(status().isBadRequest());
+  }
 }

@@ -14,6 +14,12 @@ public class RewardService {
 
   private static final Logger log = LoggerFactory.getLogger(RewardService.class);
 
+  /**
+   * Calculates total and monthly reward points for a customer
+   *
+   * @param customerId unique customer id
+   * @return RewardResponse containing customer reward details
+   */
   public RewardResponse calculateRewards(Long customerId) {
     log.info("Entering in method calculateRewards for customerId: {}", customerId);
     List<Transaction> transactions = getTransactionRecords();
@@ -52,6 +58,12 @@ public class RewardService {
     return responses;
   }
 
+  /**
+   * Calculates reward points based on transaction amount.
+   *
+   * @param amount transaction amount
+   * @return calculated reward points
+   */
   private int calculatePoints(double amount) {
     int points = 0;
     if (amount > 100) {
@@ -63,6 +75,11 @@ public class RewardService {
     return points;
   }
 
+  /**
+   * Returns dummy transaction records for reward calculation.
+   *
+   * @return list of customer transactions
+   */
   private List<Transaction> getTransactionRecords() {
     return Arrays.asList(
         new Transaction(1L, "Rahul", 120.0, LocalDate.of(2026, 1, 15)),
